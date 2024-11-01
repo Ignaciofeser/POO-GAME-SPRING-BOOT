@@ -9,6 +9,7 @@ public enum Personajes {
 
     private String nombre;
     private int saludMax;
+    private int saludActual;
     private int fuerza;
     private String habilidadEspecial;
     private int defensa;
@@ -20,6 +21,7 @@ public enum Personajes {
     Personajes(String nombre, int saludMax, int fuerza, String habilidadEspecial, int defensa, int mana, int manaMax, int manaHabilidad, double multiplicadorHabilidadEspecial) {
         this.nombre = nombre;
         this.saludMax = saludMax;
+        this.saludActual = saludMax;  // Salud actual inicia con salud máxima
         this.fuerza = fuerza;
         this.habilidadEspecial = habilidadEspecial;
         this.defensa = defensa;
@@ -29,7 +31,6 @@ public enum Personajes {
         this.multiplicadorHabilidadEspecial = multiplicadorHabilidadEspecial;
     }
 
-    // Función para usar habilidad especial
     public void usarHabilidadEspecial(Npc objetivo) {
         if (getMana() >= getManaHabilidad()) {
             switch (habilidadEspecial) {
@@ -48,60 +49,52 @@ public enum Personajes {
 
                 case "Bendición":
                     int saludRestaurada = (int) (getSaludMax() * 0.3 * getMultiplicadorHabilidadEspecial());
-                    System.out.println(ConsoleColors.GREEN_BOLD + getNombre() + ConsoleColors.RESET + " invoca una bendición y se cura " + ConsoleColors.GREEN_BOLD_BRIGHT + saludRestaurada + ConsoleColors.RESET + " puntos de salud.");
-                    // Aumentar la salud sin exceder el máximo
-                    setSaludMax(Math.min(getSaludMax() + saludRestaurada, getSaludMax()));
+                    saludActual = Math.min(saludActual + saludRestaurada, saludMax); // Asegura que no exceda saludMax
+                    System.out.println(ConsoleColors.GREEN_BOLD + getNombre() + ConsoleColors.RESET + " invoca una bendición y se cura " + ConsoleColors.GREEN_BOLD_BRIGHT + saludRestaurada + ConsoleColors.RESET + " puntos de salud. Salud actual: " + saludActual);
                     break;
 
                 default:
                     System.out.println("Habilidad no reconocida.");
             }
-            // Reducir mana tras usar la habilidad
             setMana(getMana() - getManaHabilidad());
         } else {
             System.out.println(ConsoleColors.RED_BOLD + "No hay suficiente mana para usar " + habilidadEspecial + ConsoleColors.RESET);
         }
     }
 
-    // Getters y Setters
-    public String getNombre() {
-        return nombre;
+    public void recibirDanio(int danio) {
+        int danioReducido = Math.max(danio - defensa, 0);
+        saludActual -= danioReducido;
+        System.out.println(nombre + " recibe " + danioReducido + " puntos de daño. Salud restante: " + saludActual);
+
+        if (saludActual <= 0) {
+            System.out.println(nombre + " ha sido derrotado.");
+            saludActual = 0;
+        }
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getNombre() {
+        return nombre;
     }
 
     public int getSaludMax() {
         return saludMax;
     }
 
-    public void setSaludMax(int saludMax) {
-        this.saludMax = saludMax;
+    public int getSaludActual() {
+        return saludActual;
+    }
+
+    public void setSaludActual(int saludActual) {
+        this.saludActual = saludActual;
     }
 
     public int getFuerza() {
         return fuerza;
     }
 
-    public void setFuerza(int fuerza) {
-        this.fuerza = fuerza;
-    }
-
-    public String getHabilidadEspecial() {
-        return habilidadEspecial;
-    }
-
-    public void setHabilidadEspecial(String habilidadEspecial) {
-        this.habilidadEspecial = habilidadEspecial;
-    }
-
     public int getDefensa() {
         return defensa;
-    }
-
-    public void setDefensa(int defensa) {
-        this.defensa = defensa;
     }
 
     public int getMana() {
@@ -116,23 +109,14 @@ public enum Personajes {
         return manaMax;
     }
 
-    public void setManaMax(int manaMax) {
-        this.manaMax = manaMax;
-    }
-
     public int getManaHabilidad() {
         return manaHabilidad;
-    }
-
-    public void setManaHabilidad(int manaHabilidad) {
-        this.manaHabilidad = manaHabilidad;
     }
 
     public double getMultiplicadorHabilidadEspecial() {
         return multiplicadorHabilidadEspecial;
     }
 
-    public void setMultiplicadorHabilidadEspecial(double multiplicadorHabilidadEspecial) {
-        this.multiplicadorHabilidadEspecial = multiplicadorHabilidadEspecial;
+    public void setDefensa(int max) {
     }
 }

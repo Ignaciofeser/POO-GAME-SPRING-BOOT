@@ -8,10 +8,10 @@ public class BestiaTresCabezas extends Npc {
         super("Bestia de tres cabezas", 200, 30, 20);
     }
 
-    @Override
+    /*@Override
     public void habilidadEspecialNpc(MainCharacter jugador) {
         int danio = getFuerza() * 3;
         System.out.println(getNombre() + " usa Aliento Devastador, causando " + ConsoleColors.RED_BRIGHT + danio + ConsoleColors.RESET + " de daño a " + jugador.getNombre());
         jugador.recibirDanio(danio);
-    }
+    }*/
 }
