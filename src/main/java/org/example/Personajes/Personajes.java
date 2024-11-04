@@ -31,7 +31,7 @@ public enum Personajes {
         this.multiplicadorHabilidadEspecial = multiplicadorHabilidadEspecial;
     }
 
-    public void usarHabilidadEspecial(Npc objetivo) {
+    public void usarHabilidadEspecial(Enemigos objetivo) {
         if (getMana() >= getManaHabilidad()) {
             switch (habilidadEspecial) {
                 case "Golpe Devastador":

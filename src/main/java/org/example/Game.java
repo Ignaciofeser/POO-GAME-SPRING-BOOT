@@ -1,17 +1,13 @@
 package org.example;
-import com.sun.tools.jconsole.JConsoleContext;
 
-import org.example.Personajes.MainCharacter;
-import org.example.Personajes.NPC.*;
-import org.example.Personajes.Npc;
-import org.example.Personajes.PJ.*;
+import org.example.Personajes.Personajes;
+import org.example.Personajes.Enemigos;
 
 
-import java.awt.*;
-import java.io.Console;
 import java.util.Scanner;
 
 import static org.example.Combate.combate;
+import static org.example.Personajes.Personajes.*;
 
 
 public class Game {
@@ -44,11 +40,11 @@ public class Game {
         System.out.println("Habilidad especial: Bendición (Curación)");
         int claseElegida = scanner.nextInt();
 
-        MainCharacter jugador = switch (claseElegida) {
-            case 1 -> new Guerrero();
-            case 2 -> new Mago();
-            case 3 -> new Paladin();
-            default -> new Guerrero();
+        Personajes jugador = switch (claseElegida) {
+            case 1 -> new GUERRERO();
+            case 2 -> new MAGO();
+            case 3 -> new PALADIN();
+            default -> new GUERRERO();
         };
 
         estado.agregarPersonaje(jugador);

@@ -1,7 +1,8 @@
 package org.example;
 
-import org.example.Personajes.MainCharacter;
-import org.example.Personajes.Npc;
+import org.example.Personajes.Enemigos;
+import org.example.Personajes.Personajes;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -30,7 +31,7 @@ public class GameState {
     }
 
     // Método para obtener el personaje actual
-    public MainCharacter getPersonajeActual() {
+    public Personajes getPersonajeActual() {
         if (personajes.isEmpty()) {
             System.out.println(ConsoleColors.RED_BRIGHT + "No hay personajes en el juego." + ConsoleColors.RESET);
             return null;
@@ -130,7 +131,7 @@ public class GameState {
 
 
     // Método para remover un NPC
-    public void removerNpc(Npc npc) {
+    public void removerNpc(Enemigos npc) {
         personajesNpc.remove(npc);
     }
 
