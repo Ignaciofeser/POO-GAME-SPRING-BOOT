@@ -8,41 +8,37 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GameState {
-    private List<MainCharacter> personajes;
-    private List<Npc> personajesNpc;
+    private List<Personajes> personajes;
+    private List<Enemigos> enemigos;
     private int monedas;
-    private boolean gameOver = false;
+    private boolean gameOver;
 
     public GameState() {
         this.personajes = new ArrayList<>();
-        this.personajesNpc = new ArrayList<>();
+        this.enemigos = new ArrayList<>();
         this.monedas = 0;
-        this.gameOver = gameOver;
+        this.gameOver = false;
     }
 
-    // Método para agregar personajes jugables
-    public void agregarPersonaje(MainCharacter personaje) {
+    public void agregarPersonaje(Personajes personaje) {
         personajes.add(personaje);
     }
 
-    // Método para agregar NPCs
-    public void agregarNpc(Npc npc) {
-        personajesNpc.add(npc);
+    public void agregarNpc(Enemigos enemigo) {
+        enemigos.add(enemigo);
     }
 
-    // Método para obtener el personaje actual
     public Personajes getPersonajeActual() {
         if (personajes.isEmpty()) {
             System.out.println(ConsoleColors.RED_BRIGHT + "No hay personajes en el juego." + ConsoleColors.RESET);
             return null;
         }
-        return personajes.getFirst();
+        return personajes.get(0); // Cambiado a `get(0)`
     }
 
-
-    // Método para mostrar el estado actual de todos los personajes y NPCs
+    // Mostrar el estado actual del juego
     public void mostrarEstado() {
-        if (personajes.isEmpty() && personajesNpc.isEmpty()) {
+        if (personajes.isEmpty() && enemigos.isEmpty()) {
             System.out.println(ConsoleColors.RED_BRIGHT + "No hay personajes ni NPCs en el juego." + ConsoleColors.RESET);
             return;
         }
@@ -50,26 +46,31 @@ public class GameState {
         System.out.println("Estado actual del juego:");
         System.out.println("------------");
 
-        for (MainCharacter p : personajes) {
-            System.out.println(ConsoleColors.GREEN_BOLD + p + ConsoleColors.RESET);
+        for (Personajes p : personajes) {
+            System.out.println(ConsoleColors.GREEN_BOLD + p.getNombre() + ConsoleColors.RESET);
+            System.out.println("Salud: " + ConsoleColors.GREEN_BOLD + p.getSaludActual() + "/" + p.getSaludMax() + ConsoleColors.RESET);
+            System.out.println("Daño: " + ConsoleColors.YELLOW_BOLD + p.getFuerza() + ConsoleColors.RESET);
+            System.out.println("Mana: " + ConsoleColors.BLUE_BOLD + p.getMana() + "/" + p.getManaMax() + ConsoleColors.RESET);
             System.out.println("------------");
         }
 
-        for (Npc npc : personajesNpc) {
-            System.out.println(ConsoleColors.YELLOW_BOLD_BRIGHT + npc + ConsoleColors.RESET);
+        for (Enemigos enemigos : enemigos) {
+            System.out.println(ConsoleColors.YELLOW_BOLD_BRIGHT + enemigos.getNombre() + ConsoleColors.RESET);
+            System.out.println("Salud: " + ConsoleColors.GREEN_BOLD + enemigos.getSaludActual() + "/" + enemigos.getSaludMax() + ConsoleColors.RESET);
+            System.out.println("Daño: " + ConsoleColors.YELLOW_BOLD + enemigos.getFuerza() + ConsoleColors.RESET);
             System.out.println("------------");
         }
     }
 
 
-    // Método para ganar monedas después de cada combate
+
     public void ganarMonedas() {
         int recompensa = (int) (Math.random() * 50 + 25);
         monedas += recompensa;
         System.out.println("Has ganado " + ConsoleColors.BLUE_BOLD + recompensa + ConsoleColors.RESET + " monedas. Total: " + ConsoleColors.BLUE_BOLD + monedas + ConsoleColors.RESET + " monedas.");
     }
 
-    // Método para visitar la tienda
+
     public void visitarTienda() {
         Scanner scanner = new Scanner(System.in);
         boolean salir = false;
@@ -96,7 +97,7 @@ public class GameState {
                 case 2 -> {
                     if (monedas >= 50) {
                         monedas -= 50;
-                        getPersonajeActual().restaurarMana();
+                        getPersonajeActual().setManaMax();
                         System.out.println(ConsoleColors.PURPLE_BOLD + "Has comprado una poción de mana." + ConsoleColors.RESET );
                     } else {
                         System.out.println(ConsoleColors.RED_BOLD + "No tienes suficientes monedas." + ConsoleColors.RESET );
@@ -105,7 +106,7 @@ public class GameState {
                 case 3 -> {
                     if (monedas >= 100) {
                         monedas -= 100;
-                        getPersonajeActual().mejorarHabilidadEspecial();
+                        getPersonajeActual().setMultiplicadorHabilidadEspecial();
                         System.out.println(ConsoleColors.PURPLE_BOLD + "Has mejorado tu habilidad especial." + ConsoleColors.RESET );
                     } else {
                         System.out.println(ConsoleColors.RED_BOLD + "No tienes suficientes monedas." + ConsoleColors.RESET );
@@ -124,21 +125,22 @@ public class GameState {
         }
     }
 
-
-    public boolean setGameOver(boolean gameOver) {
-        return gameOver;
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
     }
 
 
-    // Método para remover un NPC
     public void removerNpc(Enemigos npc) {
-        personajesNpc.remove(npc);
+        enemigos.remove(npc);
     }
 
     @Override
     public String toString() {
-        return null;
+        return "GameState{" +
+                "personajes=" + personajes +
+                ", personajesNpc=" + enemigos +
+                ", monedas=" + monedas +
+                ", gameOver=" + gameOver +
+                '}';
     }
 }
-
-

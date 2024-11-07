@@ -41,14 +41,15 @@ public class Game {
         int claseElegida = scanner.nextInt();
 
         Personajes jugador = switch (claseElegida) {
-            case 1 -> new GUERRERO();
-            case 2 -> new MAGO();
-            case 3 -> new PALADIN();
-            default -> new GUERRERO();
+            case 1 -> Personajes.GUERRERO;
+            case 2 -> Personajes.MAGO;
+            case 3 -> Personajes.PALADIN;
+            default -> Personajes.GUERRERO;
         };
 
         estado.agregarPersonaje(jugador);
         estado.mostrarEstado();
+
 
         System.out.println(ConsoleColors.YELLOW_UNDERLINED + "Elige un camino:" + ConsoleColors.RESET);
         System.out.println(ConsoleColors.WHITE_BOLD_BRIGHT + "1. Bosque Sombrío" + ConsoleColors.RESET);
@@ -70,17 +71,17 @@ public class Game {
         System.out.println("Goblin: Alto ahí humano, no pasarás por aqui. Hace mas de 100 años que cuido este bosque.");
         System.out.println("Goblin: Y ninguno ha podido pasar sobre mi cadaver.");
         System.out.println("Tú: No me asustas rata verde.");
-        MainCharacter jugador = estado.getPersonajeActual();
-        Npc goblin = new Goblin();
+        Personajes jugador = estado.getPersonajeActual();
+        Enemigos goblin =  Enemigos.GOBLIN;
         estado.agregarNpc(goblin);
         combate(estado, goblin);
 
-        if (jugador.getSalud() > 0) {
+        if (jugador.getSaludActual() > 0) {
             estado.ganarMonedas();
             System.out.println("Una vez derrotado, notas algo brillante en su bolsillo");
             System.out.println("¡Una manzana encantada! Esta restaura toda tu vida y mana.");
 
-            jugador.restaurarSaludYMana();
+            jugador.getSaludMax();
 
             System.out.println(ConsoleColors.YELLOW_UNDERLINED + "Ahora sí, tienes que decidir por donde seguir tu camino\n" + ConsoleColors.RESET);
             System.out.println(ConsoleColors.WHITE_BOLD_BRIGHT + "1. Profundidaes del bosque" + ConsoleColors.RESET);
@@ -98,18 +99,18 @@ public class Game {
 
         System.out.println("Decides explorar el Templo en Ruinas y te de repente escuchas un ruido.!");
         System.out.println("Es un GOLÉM.");
-        Npc golem = new Golem();
+        Enemigos golem = Enemigos.GOLEM;
         estado.agregarNpc(golem);
         combate(estado, golem);
 
-        MainCharacter jugador = estado.getPersonajeActual();
+        Personajes jugador = estado.getPersonajeActual();
       
-        if (jugador.getSalud() > 0) {
+        if (jugador.getSaludMax() > 0) {
             estado.ganarMonedas();
             System.out.println("Notas algo brillante luego de que este se desmoronara. Es una especie de anillo.");
             System.out.println("Decides colocartelo y este provoca que se te restaure toda la vida y el mana.");
 
-            jugador.restaurarSaludYMana();
+            jugador.getSaludMax();
 
            System.out.println(ConsoleColors.YELLOW_UNDERLINED + "Ahora sí, tienes que decidir por donde seguir tu camino\n" + ConsoleColors.RESET);
            System.out.println(ConsoleColors.WHITE_BOLD_BRIGHT + "1. Portal tenebroso" + ConsoleColors.RESET);
@@ -130,12 +131,12 @@ public class Game {
         System.out.println("Al abrir la puerta un Hechicero te sorprende.");
         System.out.println("Mago oscuro: Hacia tiempo que no veia a alguien por aqui. Pero genial, me hacian falta ingredientes para mis pociones.");
         System.out.println("Tú: ¡No conseguiras nada de mí!");
-        Npc magoOscuro = new MagoOscuro();
+        Enemigos magoOscuro = Enemigos.MAGO_OSCURO;
         estado.agregarNpc(magoOscuro);
         combate(estado, magoOscuro);
 
-        MainCharacter jugador = estado.getPersonajeActual();
-        if (jugador.getSalud() > 0) {
+        Personajes jugador = estado.getPersonajeActual();
+        if (jugador.getSaludMax() > 0) {
             estado.ganarMonedas();
             System.out.println("Lo has derrotado, pero ¡oh! parece que previo a eso te lanza una poción.");
             System.out.println(" (Splash), ¡APARECES EN OTRO LUGAR!");
@@ -155,11 +156,11 @@ public class Game {
         System.out.println("Tú: E, estoy busc..");
         System.out.println("Druida: No me interesa, seras fertilizante para mis preciadas plantas.");
         System.out.println("Tú: No lo conseguirás muy fácil. ¡A pelear!");
-        Npc druida = new Druida();
+        Enemigos druida = Enemigos.DRUIDA;
         estado.agregarNpc(druida);
         combate(estado, druida);
-        MainCharacter jugador = estado.getPersonajeActual();
-        if (jugador.getSalud() > 0) {
+        Personajes jugador = estado.getPersonajeActual();
+        if (jugador.getSaludMax() > 0) {
             estado.ganarMonedas();
             System.out.println("Las plantas y árboles comienzan a desvanecerse y decides alejarte de ahi.");
             System.out.println("Te alejas tanto que te encuentras una casa rodante. Decides entrar.");
@@ -176,12 +177,12 @@ public class Game {
         System.out.println("Debido a que eres una persona muy valiente decides ir a usarlo.");
         System.out.println("Pero justo antes de teletransportante (Tsss tsss tsss) es Eunectes (anaconda gigante).");
         System.out.println("Comienzas a correr pero esta es mas rapida que tú. Por lo que no tienes otra que pelear.");
-        Npc anacondaGigante = new AnacondaGigante();
+        Enemigos anacondaGigante = Enemigos.ANACONDA;
         estado.agregarNpc(anacondaGigante);
         combate(estado, anacondaGigante);
 
-        MainCharacter jugador = estado.getPersonajeActual();
-        if (jugador.getSalud() > 0) {
+        Personajes jugador = estado.getPersonajeActual();
+        if (jugador.getSaludMax() > 0) {
             estado.ganarMonedas();
         System.out.println("Tú: Nunca habia tenido tanto miedo. Pero bueno no toca de otra que seguir.");
         System.out.println("Decides irte por el portal que habias encontrado.");
@@ -199,12 +200,12 @@ public class Game {
         System.out.println("Te adentras en las profundidades de la cueva y comienzas a escuchar un ¡zumbido!");
         System.out.println("Boo, booo. Es un FANTASMA");
         System.out.println("Decides atacarlo, ya que te da genera miedo.");
-        Npc espectro = new Espectro();
+        Enemigos espectro = Enemigos.ESPECTRO;
         estado.agregarNpc(espectro);
         combate(estado, espectro);
 
-        MainCharacter jugador = estado.getPersonajeActual();
-        if (jugador.getSalud() > 0) {
+        Personajes jugador = estado.getPersonajeActual();
+        if (jugador.getSaludMax() > 0) {
             estado.ganarMonedas();
             System.out.println("Tú: No entiendo como he podido acabar con él. Pero hay que seguir investigando.");
             System.out.println("Decides continuar tu camino y ves un rastro de luz. Al salir de la cueva te encuentras con una casa rodante.");
@@ -223,14 +224,14 @@ public class Game {
         System.out.println("Y de repente... (¡CRAC!) pisas una rama. Provocando que esta te descubra.");
         System.out.println("Y al girarse notas que tiene 3 CABEZAS. Es ella, la bestia que comenzó todo. La CULPABLE de todo.");
         System.out.println("Por lo que decides actuar y comenzar la batalla.\n");
-        MainCharacter jugador = estado.getPersonajeActual();
+        Personajes jugador = estado.getPersonajeActual();
 
         System.out.println(ConsoleColors.RED_UNDERLINED + "Te enfrentas a la bestia.!" + ConsoleColors.RESET);
-        Npc bestia = new BestiaTresCabezas();
+        Enemigos bestia = Enemigos.BESTIA;
         estado.agregarNpc(bestia);
         combate(estado, bestia);
 
-        if (jugador.getSalud() > 0) {
+        if (jugador.getSaludMax() > 0) {
             System.out.println(ConsoleColors.GREEN_BACKGROUND + "¡Has derrotado a la bestia y restaurado la paz!" + ConsoleColors.RESET );
         } else {
             estado.setGameOver(true);
@@ -242,13 +243,13 @@ public class Game {
         System.out.println("Miras para arriba y ves algo terrible. Es él, el DRAGÓN OSCURO.");
         System.out.println("Según las leyendas una vez acabado todas las criaturas malignas desapareceran.");
         System.out.println("Por lo que decides actuar y lanzarte contra él.\n");
-        MainCharacter jugador = estado.getPersonajeActual();
+        Personajes jugador = estado.getPersonajeActual();
 
-        Npc dragon = new DragonFinal();
+        Enemigos dragon = Enemigos.DRAGON;
         estado.agregarNpc(dragon);
         combate(estado, dragon);
 
-        if (jugador.getSalud() > 0) {
+        if (jugador.getSaludMax() > 0) {
             System.out.println(ConsoleColors.GREEN_BACKGROUND + "¡Has derrotado al Dragón oscuro y restaurado la paz!" + ConsoleColors.RESET);
         } else {
             estado.setGameOver(true);

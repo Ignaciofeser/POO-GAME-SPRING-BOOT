@@ -85,8 +85,9 @@ public enum Personajes {
         return saludActual;
     }
 
-    public void setSaludActual(int saludActual) {
-        this.saludActual = saludActual;
+    public void restaurarSalud() {
+        int saludRestaurada = 50;
+        saludActual = Math.min(saludActual + saludRestaurada, saludMax);
     }
 
     public int getFuerza() {
@@ -101,6 +102,10 @@ public enum Personajes {
         return mana;
     }
 
+    public void setManaMax() {
+        this.manaMax = manaMax;
+    }
+
     public void setMana(int mana) {
         this.mana = mana;
     }
@@ -111,6 +116,14 @@ public enum Personajes {
 
     public int getManaHabilidad() {
         return manaHabilidad;
+    }
+
+    public void setMultiplicadorHabilidadEspecial() {
+        this.multiplicadorHabilidadEspecial = multiplicadorHabilidadEspecial * 2;
+    }
+
+    public void setSaludMax(int saludMax) {
+        this.saludMax = saludMax;
     }
 
     public double getMultiplicadorHabilidadEspecial() {
