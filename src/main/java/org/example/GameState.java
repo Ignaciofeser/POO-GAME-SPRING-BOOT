@@ -11,13 +11,11 @@ public class GameState {
     private List<Personajes> personajes;
     private List<Enemigos> enemigos;
     private int monedas;
-    private boolean gameOver;
 
     public GameState() {
         this.personajes = new ArrayList<>();
         this.enemigos = new ArrayList<>();
         this.monedas = 0;
-        this.gameOver = false;
     }
 
     public void agregarPersonaje(Personajes personaje) {
@@ -125,9 +123,9 @@ public class GameState {
         }
     }
 
-    public void setGameOver(boolean gameOver) {
+  /*  public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
-    }
+    }*/
 
 
     public void removerNpc(Enemigos npc) {
@@ -140,7 +138,12 @@ public class GameState {
                 "personajes=" + personajes +
                 ", personajesNpc=" + enemigos +
                 ", monedas=" + monedas +
-                ", gameOver=" + gameOver +
+                ", gameOver=" + isGameOver() +
                 '}';
+    }
+
+
+    public boolean isGameOver() {
+        return false;
     }
 }

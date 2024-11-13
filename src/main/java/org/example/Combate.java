@@ -67,7 +67,7 @@ public class Combate {
 
             if (jugador.getSaludActual() <= 0) {
                 System.out.println(ConsoleColors.RED_BACKGROUND + "Fin del juego." + ConsoleColors.RESET);
-                estado.setGameOver(true);
+                estado.isGameOver();
                 break;
             }
 
